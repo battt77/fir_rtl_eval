@@ -41,7 +41,7 @@ gtkwave ./fir_tb.vcd
 
 **cosx0p25m7p5m12bit.txt**使用方法详见**fir_tb.sv**：
 
-![image-20241102204023944](D:\LLM-IC\fir_rtl_eval\image\image-20241102204023944.png)
+![image-20241102204023944](./image/image-20241102204023944.png)
 
 ---
 
@@ -78,7 +78,7 @@ python fir_eval.py --coe_dir ./fir_coef.txt --inter_scale 2048  --VCD_dir ./fir_
 
 本案例**16阶fir电路系数**参考保存自**fir_coef.txt**，数据**已完成定点系数（2^11）放大**，参考为：
 
-![image-20241102212842181](D:\LLM-IC\fir_rtl_eval\image\image-20241102212842181.png)
+![image-20241102212842181](./image/image-20241102212842181.png)
 
 ---
 
