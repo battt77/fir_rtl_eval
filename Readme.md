@@ -2,7 +2,7 @@
 
 ### 简介
 
-使用基于python编写的脚本，以[scipy.signal.lfilter]([scipy.signal.lfilter — SciPy v1.8.0.dev0+1869.838cfbe Manual](https://www.osgeo.cn/scipy/reference/generated/scipy.signal.lfilter.html))方法作为FIR软件参考计算结果，使用**VCD文件评估**相同输入下**RTL电路计算结果相较于软件结果的MSE**误差
+使用基于python编写的脚本，以[scipy.signal.lfilter](https://www.osgeo.cn/scipy/reference/generated/scipy.signal.lfilter.html)方法作为FIR软件参考计算结果，使用**VCD文件评估**相同输入下**RTL电路计算结果相较于软件结果的MSE**误差
 
 其中：
 
