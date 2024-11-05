@@ -147,8 +147,8 @@ def fir_eval(h_coe=None,inter_scale=2**11,in_bitwidths = 16,out_bitwidths = 32,V
         xin_len = yout_len
     assert xin_len==yout_len,"The amout of Input  and Output is different!"
 
-    in_array = []
-    out_array = []
+    in_array = np.empty(xin_len)
+    out_array = np.empty(yout_len)
 
     for signal_id, signal in signals.items():     
         # 寻找输入值
@@ -156,9 +156,9 @@ def fir_eval(h_coe=None,inter_scale=2**11,in_bitwidths = 16,out_bitwidths = 32,V
             for i in range(xin_len):
                 value = spilt_in[i]
                 if(signinter):
-                    in_array.append(signed_bin_to_dec(value,in_bitwidths))
+                    in_array[i]=signed_bin_to_dec(value,in_bitwidths)
                 else:
-                    in_array.append(int(value,2))
+                    in_array[i]=int(value,2)
             
         # 寻找输出结果
         if signal['name'] == out_name:
@@ -166,15 +166,21 @@ def fir_eval(h_coe=None,inter_scale=2**11,in_bitwidths = 16,out_bitwidths = 32,V
             for i in range(yout_len):
                 value = spilt_out[i]
                 if signinter :
-                    out_array.append(signed_bin_to_dec(value,out_bitwidths))
+                    out_array[i]=signed_bin_to_dec(value,out_bitwidths)
                 else:
-                    out_array.append(int(value,2))
+                    out_array[i]=int(value,2)
 
     #FIR滤波器计算参考结果
-    filtered_signal = lfilter(h_coe, 1.0, in_array)/inter_scale
-    out_array = np.array(out_array)/inter_scale
+    filtered_signal = lfilter(h_coe, 1.0, in_array)
+    out_array = np.array(out_array)
     mse_error = complex_MSE(filtered_signal,out_array)
     
+    #调试代码
+    # np.set_printoptions(threshold=np.inf)
+    # print(np.nonzero(out_array-filtered_signal))
+    # print(len(in_array))
+    # print(len(out_array))
+
     print("test numbers:",xin_len)
     print("MSE result:",mse_error)
 

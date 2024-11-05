@@ -6,7 +6,7 @@
 >> V181219      : Fs=50Mhz, fstop 1Mhz-6Mhz, order 16
 *******************************************************************************/
 
-`define SAFE_DESIGN
+// `define SAFE_DESIGN
 
 module fir_guide
 (
@@ -18,6 +18,7 @@ module fir_guide
    output        [28:0] yout
 );
 
+//en delay 一个周期有效，en[1]
    reg [3:0]            en_r ;
    always @(posedge clk or negedge rstn) begin
       if (!rstn) begin
@@ -153,6 +154,7 @@ module fir_guide
   //(4) accumulation(integrator), 8 25-bit data ------------> 1 28-bit data
    reg        [28:0]    sum1 ;
    reg        [28:0]    sum2 ;
+   reg        [28:0]    sum3 ;
    reg        [28:0]    yout_t ;
 
    always @(posedge clk or negedge rstn) begin
@@ -164,7 +166,7 @@ module fir_guide
       else if(valid_mult7) begin
          sum1   <= mout[0] + mout[1] + mout[2] + mout[3] ;
          sum2   <= mout[4] + mout[5] + mout[6] + mout[7] ;
-         yout_t <= sum1 + sum2 ;
+         yout_t <= sum1 + sum2;
       end
    end
 
@@ -185,7 +187,7 @@ module fir_guide
 
 `endif
 
-   assign yout  = yout_t ;
+   assign yout  = yout_t;
    assign valid = valid_mult_r[0];
 
 
