@@ -22,7 +22,7 @@
 
 #### RTL编译查看波形：
 
-- **使用移位乘法器模块fir代码**编译：
+- **使用移位流水线乘法器模块fir代码**编译：
 
 ```powershell
 #编译代码，生成执行文件
@@ -33,9 +33,9 @@ vvp ./fir_sim
 gtkwave ./fir_tb.vcd
 ```
 
-- **不使用移位乘法器模块fir代码**修改编译：
+- **不使用移位流水线乘法器模块fir代码**修改编译：
 
-  1. 代码修改：
+  1. **代码修改**：
 
      fir_guide.v文件夹第9行，注释:
 
@@ -43,7 +43,7 @@ gtkwave ./fir_tb.vcd
      // `define SAFE_DESIGN
      ```
 
-  2. 代码编译：
+  2. **代码编译**：
 
      ```powershell
      #编译代码，生成执行文件
@@ -53,6 +53,17 @@ gtkwave ./fir_tb.vcd
      #查看波形
      gtkwave ./fir_tb.vcd
      ```
+
+- 本工程含有**移位流水线乘法器模块**的测试代码：
+
+  ```powershell
+  #编译代码，生成执行文件
+  verilog -o mult_sim ./fir/mult_shift_tb.v ./fir/mult_man.v  ./fir/mult_cell.v 
+  #生成波形
+  vvp ./mult_sim
+  #查看波形
+  gtkwave ./mult_shift_tb.vcd
+  ```
 
 #### fir文件夹中：
 
@@ -109,14 +120,14 @@ python fir_eval.py --coe_dir ./fir_coef.txt  --VCD_dir ./fir_tb.vcd
 - fir电路**输入端口**命名：**xin**
 - fir电路**输出端口**命名：**yout**
 - fir电路**clock**命名：**clk**
-- fir电路**输入有效位**：**en**
+- fir电路**输入有效位**：**xin_en**
 
-- fir电路**输出有效位**：**valid**
+- fir电路**输出有效位**：**yout_valid**
 
 #### 时序规范：
 
-- **en**信号为高时，**输入可立即有效**
-- **valid**信号为高时，**输入需要下一个时钟周期才能有效**
+- **xin_en**信号为高时，**输入可立即有效**
+- **yout_valid**信号为高时，**输入需要下一个时钟周期才能有效**
 
 **不规范的代码将导致脚本无法使用**
 
@@ -126,21 +137,22 @@ python fir_eval.py --coe_dir ./fir_coef.txt  --VCD_dir ./fir_tb.vcd
 
 基于参考的**16阶fir电路**：
 
-- **使用移位乘法器模块**MSE值：387524357884.2102
+- **使用移位乘法器模块**MSE值：0
 
 - **禁用移位乘法器模块**MSE值：0
-
-可使用计算精度更高的电路进行实验
 
 ---
 
 ### 注：
 
-- 根据MSE值结果，本仓库所参考电路移位乘法器的计算精度并不理想
 - 脚本功能仍不完善，具有隐藏bug的可能性，还需要针对具体应用修补完善
 
 ---
 
 ### 维护记录：
 
-- 2024.11.5：修改了fir_eval.py中，列表赋予多余的输出值导致MSE值计算错误的问题；进一步修改实验了16阶fir电路代码；脚本删除了**inter_scale**接口
+- 2024.11.5：
+  1. 修改了fir_eval.py中，列表赋予多余的输出值导致MSE值计算错误的问题
+  2. 16阶fir电路代码端口修改：en->xin_en、valid->yout_valid
+  3. fir_eval.py删除了~~inter_scale~~接口
+  4. 修复fir_eval.py因为多个en端口名称重复，从而错误读取en置1时刻，导致错误读取有效输入数值的重大bug，使脚本能够正确计算16阶FIR电路使用流水线乘法器的MSE值

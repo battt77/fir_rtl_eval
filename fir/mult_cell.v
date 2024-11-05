@@ -5,13 +5,13 @@ module    mult_cell
       input                     clk,
       input                     rstn,
       input                     en,
-      input [M+N-1:0]           mult1,
-      input [M-1:0]             mult2,
-      input [M+N-1:0]           mult1_acci,
+      input [M+N-1:0]           mult1,    //25b
+      input [M-1:0]             mult2,   //12b
+      input [M+N-1:0]           mult1_acci, //25b
 
-      output reg [M+N-1:0]      mult1_o,
-      output reg [M-1:0]        mult2_shift, //keep divisor for pipeline
-      output reg [N+M-1:0]      mult1_acco,   //keep acc results for pipeline
+      output reg [M+N-1:0]      mult1_o,     //25b
+      output reg [M-1:0]        mult2_shift, //keep divisor for pipeline  12b
+      output reg [N+M-1:0]      mult1_acco,   //keep acc results for pipeline 
       output reg                rdy
   );
 

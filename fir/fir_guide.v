@@ -6,18 +6,20 @@
 >> V181219      : Fs=50Mhz, fstop 1Mhz-6Mhz, order 16
 *******************************************************************************/
 
-// `define SAFE_DESIGN
+`define SAFE_DESIGN
 
 module fir_guide
 (
    input                rstn,
    input                clk, // Fs=2K
-   input                en,
+   input                xin_en,
    input        [11:0]  xin, //
-   output               valid,
+   output               yout_valid,
    output        [28:0] yout
 );
 
+assign en = xin_en;
+assign yout_valid = valid;
 //en delay 一个周期有效，en[1]
    reg [3:0]            en_r ;
    always @(posedge clk or negedge rstn) begin

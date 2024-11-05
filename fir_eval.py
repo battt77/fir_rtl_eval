@@ -78,8 +78,8 @@ def fir_eval(h_coe=None,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signin
     assert in_name in check_port_name ,"Make sure your input port name is xin!"
     assert out_name in check_port_name ,"Make sure your output port name is yout!"  
     assert 'clk' in check_port_name,"Make sure your clock name is clk!"
-    assert 'en' in check_port_name,"Make sure you have en signal!"      
-    assert 'valid'in check_port_name,"Make sure you have valid signal!"    
+    assert 'xin_en' in check_port_name,"Make sure you have xin_en signal!"      
+    assert 'yout_valid'in check_port_name,"Make sure you have yout_valid signal!"    
 
     valid_time = 0
     en_time = 0
@@ -90,7 +90,7 @@ def fir_eval(h_coe=None,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signin
             clk_period = signal['changes'][4][0]-signal['changes'][2][0]
         
         #提取en值为高的时刻
-        if signal['name'] == 'en':
+        if signal['name'] == "xin_en":
             for change in signal['changes']:
                 time, value = change
                 if(value == '1'):
@@ -98,13 +98,13 @@ def fir_eval(h_coe=None,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signin
                         en_time = int(time)        
 
         #提取valid值为高的时刻
-        if signal['name'] == 'valid':
+        if signal['name'] == 'yout_valid':
             for change in signal['changes']:
                 time, value = change
                 if(value == '1'):
                     if valid_time<int(time):
                         valid_time = int(time)
-    
+
     in_time_last = en_time
     out_time_last = valid_time
     for signal_id, signal in signals.items(): 
@@ -175,11 +175,14 @@ def fir_eval(h_coe=None,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signin
     out_array = np.array(out_array)
     mse_error = complex_MSE(filtered_signal,out_array)
     
-    #调试代码
+    # #调试代码
     # np.set_printoptions(threshold=np.inf)
-    # print(np.nonzero(out_array-filtered_signal))
+    # # print(np.nonzero(out_array-filtered_signal)[0:20])
     # print(len(in_array))
     # print(len(out_array))
+    # print(in_array[0:20])
+    # print(filtered_signal[0:20])
+    # print(out_array[0:20])
 
     print("test numbers:",xin_len)
     print("MSE result:",mse_error)

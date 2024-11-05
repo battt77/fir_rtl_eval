@@ -4,10 +4,10 @@ module test ;
    //input
    reg          clk ;
    reg          rst_n ;
-   reg          en ;
+   reg          xin_en ;
    reg [11:0]   xin ;
    //output
-   wire         valid ;
+   wire         yout_valid ;
    wire [28:0]  yout ;
 
    parameter    SIMU_CYCLE   = 64'd2000 ;
@@ -41,12 +41,12 @@ module test ;
    initial begin
       $readmemh("./fir/cosx0p25m7p5m12bit.txt", stimulus) ;
       i = 0 ;
-      en = 0 ;
+      xin_en = 0 ;
       xin = 0 ;
       # 200 ;
       forever begin
          @(negedge clk) begin
-            en          = 1'b1 ;
+            xin_en          = 1'b1 ;
             xin         = stimulus[i] ;
             if (i == SIN_DATA_NUM-1) begin
                i = 0 ;
@@ -60,17 +60,15 @@ module test ;
 
    initial begin
       $dumpfile("fir_tb.vcd");
-      $dumpvars;
+      $dumpvars(0);
    end
 
 fir_guide u_fir_paral (
     .xin         (xin),
     .clk         (clk),
-    .en          (en),
+    .xin_en      (xin_en),
     .rstn        (rst_n),
-    .valid       (valid),
+    .yout_valid  (yout_valid),
     .yout        (yout));
-
-
 
 endmodule // test
