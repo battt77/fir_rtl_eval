@@ -65,7 +65,7 @@ def signed_bin_to_dec(bin_str,bitwidths):
     
     return value
 
-def fir_eval(h_coe=None,inter_scale=2**11,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signinter=False):
+def fir_eval(h_coe=None,in_bitwidths = 16,out_bitwidths = 32,VCD_dir=None,signinter=False):
 
     in_name = "xin"
     out_name = "yout"
@@ -199,7 +199,6 @@ def arg_manage():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--coe_dir",type=str,required=True,help="FIR系数文件路径")
-    parser.add_argument("--inter_scale",type=int,required=True,help="定点放大系数")
     parser.add_argument("--in_bitwidths",type=int,required=False,help="单个数据输入位宽")
     parser.add_argument("--out_bitwidths",type=int,required=False,help="单个数据输出位宽")
     parser.add_argument("--VCD_dir",type=str,required=True,help="VCD文件路径")
@@ -221,7 +220,7 @@ if __name__ == "__main__":
     # filename = './fir_tb.vcd' 
     # coe = './coef.txt'
     coef = read_coefficients(arg.coe_dir)
-    fir_eval(h_coe=coef,inter_scale=arg.inter_scale,in_bitwidths = arg.in_bitwidths,out_bitwidths= arg.out_bitwidths,VCD_dir=arg.VCD_dir,signinter=arg.sign_inter)
+    fir_eval(h_coe=coef,in_bitwidths = arg.in_bitwidths,out_bitwidths= arg.out_bitwidths,VCD_dir=arg.VCD_dir,signinter=arg.sign_inter)
 
 
 

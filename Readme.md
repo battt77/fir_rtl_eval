@@ -18,11 +18,11 @@
 
 #### RTL文件：
 
-- fir文件夹为16阶fir电路代码
+- **fir文件夹为16阶fir电路代码**
 
 #### RTL编译查看波形：
 
-**fir代码**编译：
+- **使用移位乘法器模块fir代码**编译：
 
 ```powershell
 #编译代码，生成执行文件
@@ -32,6 +32,27 @@ vvp ./fir_sim
 #查看波形
 gtkwave ./fir_tb.vcd
 ```
+
+- **不使用移位乘法器模块fir代码**修改编译：
+
+  1. 代码修改：
+
+     fir_guide.v文件夹第9行，注释:
+
+     ```verilog
+     // `define SAFE_DESIGN
+     ```
+
+  2. 代码编译：
+
+     ```powershell
+     #编译代码，生成执行文件
+     verilog -o fir_sim ./fir/fir_tb.sv ./fir/fir_guide.v
+     #生成波形
+     vvp ./fir_sim
+     #查看波形
+     gtkwave ./fir_tb.vcd
+     ```
 
 #### fir文件夹中：
 
@@ -104,7 +125,11 @@ python fir_eval.py --coe_dir ./fir_coef.txt --inter_scale 2048  --VCD_dir ./fir_
 
 ### 实验结果：
 
-基于参考的**16阶fir电路**，**MSE**值：***168443.32587910***
+基于参考的**16阶fir电路**：
+
+- **使用移位乘法器模块**MSE值：387524357884.2102
+
+- **禁用移位乘法器模块**MSE值：0
 
 可使用计算精度更高的电路进行实验
 
@@ -112,6 +137,12 @@ python fir_eval.py --coe_dir ./fir_coef.txt --inter_scale 2048  --VCD_dir ./fir_
 
 ### 注：
 
-- 根据MSE值结果，本仓库所参考电路计算精度并不理想
+- 根据MSE值结果，本仓库所参考电路移位乘法器的计算精度并不理想
 - 脚本功能仍不完善，具有隐藏bug的可能性，还需要针对具体应用修补完善
+
+---
+
+### 维护记录：
+
+- 2024.11.5：修改了fir_eval.py中，列表赋予多余的输出值导致MSE值计算错误的问题；进一步修改实验了16阶fir电路代码
 
