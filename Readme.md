@@ -58,7 +58,7 @@ gtkwave ./fir_tb.vcd
 
   ```powershell
   #编译代码，生成执行文件
-  verilog -o mult_sim ./fir/mult_shift_tb.v ./fir/mult_man.v  ./fir/mult_cell.v 
+  iverilog -o mult_sim ./fir/mult_shift_tb.v ./fir/mult_man.v  ./fir/mult_cell.v 
   #生成波形
   vvp ./mult_sim
   #查看波形
