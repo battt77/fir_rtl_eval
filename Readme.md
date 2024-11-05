@@ -84,14 +84,13 @@ uv pip install scipy
 使用下列命令运行fir_eval脚本评估16阶fir电路：
 
 ```powershell
-python fir_eval.py --coe_dir ./fir_coef.txt --inter_scale 2048  --VCD_dir ./fir_tb.vcd
+python fir_eval.py --coe_dir ./fir_coef.txt  --VCD_dir ./fir_tb.vcd
 ```
 
 本脚本预留参数接口：
 
 - **python**：当前运行环境的python命令，必填
 - **coe_dir**：FIR乘加链系数文件路径，**所存数据建议为已完成使用所定义定点放大系数放大的10进制整数**
-- **inter_scale**：小数转定点数放大系数，必填
 - **VCD_dir**：VCD文件路径，必填
 - **sign_inter**：是否使用了定点整形，默认为False
 - **in_bitwidths**：单个数据输入位宽，sign_inter为True时必填
@@ -144,5 +143,4 @@ python fir_eval.py --coe_dir ./fir_coef.txt --inter_scale 2048  --VCD_dir ./fir_
 
 ### 维护记录：
 
-- 2024.11.5：修改了fir_eval.py中，列表赋予多余的输出值导致MSE值计算错误的问题；进一步修改实验了16阶fir电路代码
-
+- 2024.11.5：修改了fir_eval.py中，列表赋予多余的输出值导致MSE值计算错误的问题；进一步修改实验了16阶fir电路代码；脚本删除了**inter_scale**接口
