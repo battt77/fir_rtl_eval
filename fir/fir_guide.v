@@ -6,7 +6,7 @@
 >> V181219      : Fs=50Mhz, fstop 1Mhz-6Mhz, order 16
 *******************************************************************************/
 
-// `define SAFE_DESIGN
+`define SAFE_DESIGN
 
 module fir_guide
 (
