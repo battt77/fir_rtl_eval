@@ -26,7 +26,7 @@
 
 ```powershell
 #编译代码，生成执行文件
-verilog -o fir_sim ./fir/fir_tb.sv ./fir/fir_guide.v  ./fir/mult_cell.v ./fir/mult_man.v
+iverilog -o fir_sim ./fir/fir_tb.sv ./fir/fir_guide.v  ./fir/mult_cell.v ./fir/mult_man.v
 #生成波形
 vvp ./fir_sim
 #查看波形
@@ -47,7 +47,7 @@ gtkwave ./fir_tb.vcd
 
      ```powershell
      #编译代码，生成执行文件
-     verilog -o fir_sim ./fir/fir_tb.sv ./fir/fir_guide.v
+     iverilog -o fir_sim ./fir/fir_tb.sv ./fir/fir_guide.v
      #生成波形
      vvp ./fir_sim
      #查看波形
